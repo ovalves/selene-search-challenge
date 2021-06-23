@@ -1,6 +1,6 @@
 {
-    "name": "vindite/selene-skeleton",
-    "description": "simple usage of Selene microframework",
+    "name": "vindite/selene-project-a",
+    "description": "API de busca de usuários utilizando o selene framework",
     "type": "project",
     "license": "MIT",
     "authors": [{
