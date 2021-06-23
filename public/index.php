@@ -12,6 +12,7 @@ $app = Selene\App\Factory::create();
 $app->route()->middleware([
 //    new Selene\Middleware\Handler\Auth
 ])->group(function () use ($app) {
-    $app->route()->get('/search', 'UsersController@index');
+    $app->route()->get('/users/name', 'UsersController@getUserByName');
+    $app->route()->get('/users/username', 'UsersController@getUserByUserName');
     $app->route()->get('/', 'HomeController@index');
 })->run();
