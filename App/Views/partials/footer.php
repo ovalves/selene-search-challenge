@@ -1,0 +1,1 @@
+<!-- use partial template as view extension -->
