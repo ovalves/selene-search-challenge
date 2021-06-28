@@ -13,23 +13,23 @@ class UsersGateway extends GatewayAbstract
     /**
      * Busca os usuarios utilizando o campo name.
      */
-    public function findUsersByName($name, $from, $size): array
+    public function findUsersByName(string $where, int $from, int $size): array
     {
-        return $this->findUsers('name', $name, $from, $size);
+        return $this->findUsers('name', $where, $from, $size);
     }
 
     /**
      * Busca os usuarios utilizando o campo username.
      */
-    public function findUsersByUserName($name, $from, $size): array
+    public function findUsersByUserName(string $where, int $from, int $size): array
     {
-        return $this->findUsers('username', $name, $from, $size);
+        return $this->findUsers('username', $where, $from, $size);
     }
 
     /**
      * Query generica para busca de usuarios por name ou username.
      */
-    private function findUsers($column, $name, $from, $size): array
+    private function findUsers(string $column, string $where, int $from, int $size): array
     {
         return $this
             ->select([
@@ -40,7 +40,7 @@ class UsersGateway extends GatewayAbstract
             ->table('users')
             ->leftJoin('lista_relevancia_1', 'users.id', '=', 'lista_relevancia_1.id')
             ->leftJoin('lista_relevancia_2', 'users.id', '=', 'lista_relevancia_2.id')
-            ->where(["{$column} like ?" => "%{$name}%"])
+            ->where(["{$column} like ?" => "%{$where}%"])
             ->order('lista_relevancia_1.id', 'DESC')
             ->order('lista_relevancia_2.id', 'DESC')
             ->order('users.id', 'DESC')
