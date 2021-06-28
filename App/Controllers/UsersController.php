@@ -8,22 +8,32 @@
 
 use Selene\Controllers\BaseController;
 use Selene\Request\Request;
+use Selene\Response\Response;
 
 class UsersController extends BaseController
 {
-    public function getUserByName(Request $request): mixed
+    public function getUserByName(Request $request, Response $response): mixed
     {
         $params = $request->getQueryParams();
 
-        $name = $params['query'] ?? null;
-        $from = (int) $params['from'] ?? 0;
-        $size = (int) $params['size'] ?? 15;
+        $name = (string) (empty($params['query'])) ? null : $params['query'];
+        $from = (int) (empty($params['from'])) ? 0 : $params['from'];
+        $size = (int) (empty($params['size'])) ? 15 : $params['size'];
 
         $users = $this
-            ->select('name')
+            ->select([
+                'users.id',
+                'users.name',
+                'users.username',
+            ])
             ->table('users')
+            ->leftJoin('lista_relevancia_1', 'users.id', '=', 'lista_relevancia_1.id')
+            ->leftJoin('lista_relevancia_2', 'users.id', '=', 'lista_relevancia_2.id')
+
             ->where(['name like ?' => "%{$name}%"])
-            ->order('id', 'ASC')
+            ->order('lista_relevancia_1.id', 'DESC')
+            ->order('lista_relevancia_2.id', 'DESC')
+            ->order('users.id', 'DESC')
             ->limit($size)
             ->offset($from)
             ->execute()
@@ -31,16 +41,16 @@ class UsersController extends BaseController
 
         echo '<pre>';
         echo json_encode($users, JSON_PRETTY_PRINT);
-        exit();
+        exit;
     }
 
     public function getUserByUserName(Request $request): mixed
     {
         $params = $request->getQueryParams();
 
-        $username = $params['query'] ?? null;
-        $from = (int) $params['from'] ?? 0;
-        $size = (int) $params['size'] ?? 15;
+        $username = (string) (empty($params['query'])) ? null : $params['query'];
+        $from = (int) (empty($params['from'])) ? 0 : $params['from'];
+        $size = (int) (empty($params['size'])) ? 15 : $params['size'];
 
         $users = $this
             ->select('username')
