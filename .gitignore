@@ -1,3 +1,4 @@
 composer.lock
 vendor
 App/Config
+data
