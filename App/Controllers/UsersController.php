@@ -32,7 +32,7 @@ class UsersController extends BaseController
             'from' => (int) $this->from,
             'size' => (int) $this->size,
             'data' => $users,
-        ]);
+        ], $response::HTTP_OK);
     }
 
     public function getUserByUserName(Request $request, Response $response): JsonResponse
@@ -49,7 +49,7 @@ class UsersController extends BaseController
             'from' => (int) $this->from,
             'size' => (int) $this->size,
             'data' => $users,
-        ]);
+        ], $response::HTTP_OK);
     }
 
     private function getUsersParams(Request $request): void
