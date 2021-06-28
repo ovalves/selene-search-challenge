@@ -57,8 +57,10 @@ class UsersController extends BaseController
         $params = $request->getQueryParams();
 
         $this->name = (string) (empty($params['query'])) ? null : $params['query'];
-        $this->from = (int) (empty($params['from'])) ? 0 : $params['from'];
         $this->size = (int) (empty($params['size'])) ? 15 : $params['size'];
+        $this->from = (int) (empty($params['from']))
+            ? 0
+            : $params['from'] * $this->size;
     }
 
     private function getGateway(): UsersGateway
