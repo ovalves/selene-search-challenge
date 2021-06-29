@@ -56,7 +56,7 @@ class UsersController extends BaseController
     {
         $params = $request->getQueryParams();
 
-        $this->name = (string) (empty($params['query'])) ? null : $params['query'];
+        $this->name = (string) (empty($params['query'])) ? '' : $params['query'];
         $this->size = (int) (empty($params['size'])) ? 15 : $params['size'];
         $this->from = (int) (empty($params['from']))
             ? 0
