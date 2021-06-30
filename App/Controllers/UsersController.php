@@ -20,36 +20,70 @@ class UsersController extends BaseController
 
     public function getUserByName(Request $request, Response $response): JsonResponse
     {
-        $this->getUsersParams($request);
+        try {
+            $this->getUsersParams($request);
+            $users = $this->getGateway()->findUsersByName(
+                $this->name,
+                $this->from,
+                $this->size
+            );
 
-        $users = $this->getGateway()->findUsersByName(
-            $this->name,
-            $this->from,
-            $this->size
-        );
+            if (empty($users)) {
+                throw new \Exception('Nenhum usuário encontrado.', 404);
+            }
 
-        return $response->json([
-            'from' => (int) $this->from,
-            'size' => (int) $this->size,
-            'data' => $users,
-        ], $response::HTTP_OK);
+            return $response->json(
+                [
+                    'from' => (int) $this->from,
+                    'size' => (int) $this->size,
+                    'data' => $users,
+                ],
+                $response::HTTP_OK
+            );
+        } catch (\Exception $e) {
+            return $response->json(
+                [
+                    'from' => (int) $this->from,
+                    'size' => (int) $this->size,
+                    'data' => [],
+                ],
+                $e->getCode() ?? 500
+            );
+        }
     }
 
     public function getUserByUserName(Request $request, Response $response): JsonResponse
     {
-        $this->getUsersParams($request);
+        try {
+            $this->getUsersParams($request);
+            $users = $this->getGateway()->findUsersByUserName(
+                $this->name,
+                $this->from,
+                $this->size
+            );
 
-        $users = $this->getGateway()->findUsersByUserName(
-            $this->name,
-            $this->from,
-            $this->size
-        );
+            if (empty($users)) {
+                throw new \Exception('Nenhum usuário encontrado.', 404);
+            }
 
-        return $response->json([
-            'from' => (int) $this->from,
-            'size' => (int) $this->size,
-            'data' => $users,
-        ], $response::HTTP_OK);
+            return $response->json(
+                [
+                    'from' => (int) $this->from,
+                    'size' => (int) $this->size,
+                    'data' => $users,
+                ],
+                $response::HTTP_OK
+            );
+        } catch (\Exception $e) {
+            return $response->json(
+                [
+                    'from' => (int) $this->from,
+                    'size' => (int) $this->size,
+                    'data' => [],
+                ],
+                $e->getCode() ?? 500
+            );
+        }
     }
 
     private function getUsersParams(Request $request): void

@@ -15,7 +15,11 @@ class UsersGateway extends GatewayAbstract
      */
     public function findUsersByName(string $where, int $from, int $size): array
     {
-        return $this->findUsers('name', $where, $from, $size);
+        try {
+            return $this->findUsers('name', $where, $from, $size);
+        } catch (\Exception $e) {
+            throw $e;
+        }
     }
 
     /**
@@ -23,7 +27,11 @@ class UsersGateway extends GatewayAbstract
      */
     public function findUsersByUserName(string $where, int $from, int $size): array
     {
-        return $this->findUsers('username', $where, $from, $size);
+        try {
+            return $this->findUsers('username', $where, $from, $size);
+        } catch (\Exception $e) {
+            throw $e;
+        }
     }
 
     /**
@@ -31,22 +39,26 @@ class UsersGateway extends GatewayAbstract
      */
     private function findUsers(string $column, string $where, int $from, int $size): array
     {
-        return $this
-            ->select([
-                'users.id',
-                'users.name',
-                'users.username',
-            ])
-            ->table('users')
-            ->leftJoin('lista_relevancia_1', 'users.id', '=', 'lista_relevancia_1.id')
-            ->leftJoin('lista_relevancia_2', 'users.id', '=', 'lista_relevancia_2.id')
-            ->where(["{$column} like ?" => "%{$where}%"])
-            ->order('lista_relevancia_1.id', 'DESC')
-            ->order('lista_relevancia_2.id', 'DESC')
-            ->order('users.id', 'DESC')
-            ->limit($size)
-            ->offset($from)
-            ->execute()
-            ->fetchAll(\PDO::FETCH_ASSOC);
+        try {
+            return $this
+                ->select([
+                    'users.id',
+                    'users.name',
+                    'users.username',
+                ])
+                ->table('users')
+                ->leftJoin('lista_relevancia_1', 'users.id', '=', 'lista_relevancia_1.id')
+                ->leftJoin('lista_relevancia_2', 'users.id', '=', 'lista_relevancia_2.id')
+                ->where(["{$column} like ?" => "%{$where}%"])
+                ->order('lista_relevancia_1.id', 'DESC')
+                ->order('lista_relevancia_2.id', 'DESC')
+                ->order('users.id', 'DESC')
+                ->limit($size)
+                ->offset($from)
+                ->execute()
+                ->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage() ?? 'Erro ao realizar a busca de usuários', $e->getCode() ?? 500);
+        }
     }
 }
