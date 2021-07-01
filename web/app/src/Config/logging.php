@@ -1,7 +1,6 @@
 <?php
 
 return [
-    'default' => [
-
-    ]
+    'path' => env('PATH_LOGGING'),
+    'filename' => env('FILENAME_LOGGING')
 ];
