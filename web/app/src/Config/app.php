@@ -6,10 +6,10 @@ use Selene\Database\DatabaseConstant;
 return [
     ConfigConstant::DATABASE => [
         'mysql' => [
-            DatabaseConstant::DB_HOST => 'localhost',
-            DatabaseConstant::DB_NAME => 'selene',
-            DatabaseConstant::DB_USER => 'root',
-            DatabaseConstant::DB_PASS => 'root',
+            DatabaseConstant::DB_HOST => env('MYSQL_HOST'),
+            DatabaseConstant::DB_NAME => env('MYSQL_DATABASE'),
+            DatabaseConstant::DB_USER => env('MYSQL_USER'),
+            DatabaseConstant::DB_PASS => env('MYSQL_PASSWORD'),
         ],
         DatabaseConstant::DEFAULT_DB => 'mysql',
     ],
