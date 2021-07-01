@@ -16,7 +16,6 @@ help:
 	@echo "  composer-up         Update PHP dependencies with composer"
 	@echo "  docker-start        Create and start containers"
 	@echo "  docker-stop         Stop and clear all services"
-	@echo "  gen-certs           Generate SSL certificates"
 	@echo "  logs                Follow log output"
 	@echo "  mysql-dump          Create backup of all databases"
 	@echo "  mysql-restore       Restore backup of all databases"
@@ -52,9 +51,6 @@ docker-start: init
 docker-stop:
 	@docker-compose down -v
 	@make clean
-
-gen-certs:
-	@docker run --rm -v $(shell pwd)/etc/ssl:/certificates -e "SERVER=$(NGINX_HOST)" jacoelho/generate-certificate
 
 logs:
 	@docker-compose logs -f
