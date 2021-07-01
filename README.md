@@ -188,7 +188,7 @@ ___
 ### Instalando pacotes com composer
 
 ```sh
-docker run --rm -v $(pwd)/web/app:/app composer require symfony/yaml
+docker run --rm -v $(pwd)/web/app:/app composer require symfony/dotenv
 ```
 ___
 
