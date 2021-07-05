@@ -25,9 +25,6 @@ help:
 	@echo "  phpmd               Rodar o PHP Mess Detector no código PHP"
 	@echo "  test                Rodar os testes da aplicação"
 
-init:
-	@$(shell cp -n $(shell pwd)/web/app/composer.json.dist $(shell pwd)/web/app/composer.json 2> /dev/null)
-
 phpdoc:
 	@docker run --rm -v $(shell pwd):/data phpdoc/phpdoc -i=vendor/ -d /data/web/app/src -t /data/web/app/doc
 	@make resetOwner
@@ -48,7 +45,7 @@ code-sniff:
 composer-up:
 	@docker run --rm -v $(shell pwd)/web/app:/app composer update
 
-start: init
+start:
 	docker-compose up -d
 
 start-with-db: start
@@ -94,4 +91,4 @@ test:
 resetOwner:
 	@$(shell chown -Rf $(SUDO_USER):$(shell id -g -n $(SUDO_USER)) $(MYSQL_DUMPS_DIR) "$(shell pwd)/etc/ssl" "$(shell pwd)/web/app" 2> /dev/null)
 
-.PHONY: clean test code-sniff init
+.PHONY: clean test code-sniff
