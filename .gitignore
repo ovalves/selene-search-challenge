@@ -8,11 +8,11 @@ data
 .DS_Store
 
 # Application
-web/app/composer.json
 web/app/composer.lock
 web/app/vendor/
 web/app/doc/
 web/app/report/
+web/app/.env
 data/
 
 # PHPStorm
