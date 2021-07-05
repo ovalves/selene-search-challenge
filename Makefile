@@ -14,11 +14,13 @@ help:
 	@echo "  code-sniff          Rodar o Code Sniffer no código PHP (PSR2)"
 	@echo "  clean               Limpar os diretórios necessários para reiniciar os containers"
 	@echo "  composer-up         Atualizar as dependências do PHP utilizando o composer"
-	@echo "  start        		 Iniciar todos os serviços"
-	@echo "  stop         		 Parar todos os serviços"
+	@echo "  start               Iniciar todos os serviços"
+	@echo "  stop                Parar todos os serviços"
 	@echo "  logs                Visualizar os logs dos serviços"
-	@echo "  mysql-dump          Criar backup de todos os bancos de dados"
-	@echo "  mysql-restore       Restaurar o backup de todos os bancos de dados"
+	@echo "  mysql-dump-all      Criar backup de todos os bancos de dados"
+	@echo "  mysql-restore-all   Restaurar o backup de todos os bancos de dados"
+	@echo "  mysql-dump-db       Criar backup de um banco de dados especifico (mysql-dump-db DATABASE='DATABASE_NAME')"
+	@echo "  mysql-restore-db    Restaurar o backup e um banco de dados especifico (mysql-restore-db DATABASE='DATABASE_NAME')"
 	@echo "  phpmd               Rodar o PHP Mess Detector no código PHP"
 	@echo "  test                Rodar os testes da aplicação"
 
@@ -31,7 +33,6 @@ apidoc:
 
 clean:
 	@rm -Rf data/db/mysql/*
-	@rm -Rf $(MYSQL_DUMPS_DIR)/*
 	@rm -Rf web/app/vendor
 	@rm -Rf web/app/composer.lock
 	@rm -Rf web/app/doc
@@ -56,13 +57,25 @@ stop:
 logs:
 	@docker-compose logs -f
 
-mysql-dump:
+mysql-dump-all:
+	@echo "Fazendo backup de todas as bases de dados..."
 	@mkdir -p $(MYSQL_DUMPS_DIR)
 	@docker exec $(shell docker-compose ps -q mysqldb) mysqldump --all-databases -u"$(MYSQL_ROOT_USER)" -p"$(MYSQL_ROOT_PASSWORD)" > $(MYSQL_DUMPS_DIR)/db.sql 2>/dev/null
 	@make resetOwner
 
-mysql-restore:
+mysql-restore-all:
+	@echo "Restaurando todas as bases de dados..."
 	@docker exec -i $(shell docker-compose ps -q mysqldb) mysql -u"$(MYSQL_ROOT_USER)" -p"$(MYSQL_ROOT_PASSWORD)" < $(MYSQL_DUMPS_DIR)/db.sql 2>/dev/null
+
+mysql-dump-db:
+	@echo "Fazendo backup da base de dados $$DATABASE..."
+	@mkdir -p $(MYSQL_DUMPS_DIR)
+	@docker exec $(shell docker-compose ps -q mysqldb) mysqldump --all-databases -u"$(MYSQL_ROOT_USER)" -p"$(MYSQL_ROOT_PASSWORD)" > $(MYSQL_DUMPS_DIR)/$$DATABASE.sql 2>/dev/null
+	@make resetOwner
+
+mysql-restore-db:
+	@echo "Restaurando a base de dados $$DATABASE..."
+	@docker exec -i $(shell docker-compose ps -q mysqldb) mysql -u"$(MYSQL_ROOT_USER)" -p"$(MYSQL_ROOT_PASSWORD)" < $(MYSQL_DUMPS_DIR)/$$DATABASE.sql 2>/dev/null
 
 phpmd:
 	@docker-compose exec -T php \
