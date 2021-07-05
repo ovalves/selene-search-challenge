@@ -3,15 +3,18 @@
 - [Desafio de Busca utilizando o selene framework](#desafio-de-busca-utilizando-o-selene-framework)
   - [Introdução](#introdução)
   - [Conceitos](#conceitos)
-    - [Estrutura do projeto](#estrutura-do-projeto)
   - [Instalação](#instalação)
     - [Pré-requisitos.](#pré-requisitos)
     - [Imagens utilizadas neste projeto](#imagens-utilizadas-neste-projeto)
     - [Clonando o projeto](#clonando-o-projeto)
-  - [Executanto a aplicação](#executanto-a-aplicação)
-  - [Usando o makefile](#usando-o-makefile)
-    - [Exemplos](#exemplos)
-  - [Usando os comandos do docker](#usando-os-comandos-do-docker)
+    - [Estrutura do projeto](#estrutura-do-projeto)
+  - [Comandos do make](#comandos-do-make)
+  - [Executando a aplicação](#executando-a-aplicação)
+  - [A API de busca](#a-api-de-busca)
+    - [Endpoints](#endpoints)
+    - [Parâmetros de URL](#parâmetros-de-url)
+      - [Exemplo de requisição com parâmetros de URL](#exemplo-de-requisição-com-parâmetros-de-url)
+  - [Comandos do docker](#comandos-do-docker)
     - [Instalando pacotes com composer](#instalando-pacotes-com-composer)
     - [Atualizando dependências PHP com composer](#atualizando-dependências-php-com-composer)
     - [Gerando documentações com PHPDOC](#gerando-documentações-com-phpdoc)
@@ -41,39 +44,6 @@ Esta API utiliza como base a linguagem PHP e o [Selene](https://github.com/ovalv
 Como definição para a resolução do problema de busca de usuários. Temos:
 
 * Alguns usuários possuem maior prioridade, portanto, primeiro devemos identificar esses usuários e então priorizá-los no retorno da API
-___
-
-### Estrutura do projeto
-
-```sh
-.
-├── Makefile
-├── README.md
-├── data
-│   └── db
-│       ├── dumps
-│       └── mysql
-├── doc
-├── docker-compose.yml
-├── etc
-│   ├── nginx
-│   │   ├── default.conf
-│   │   └── default.template.conf
-│   ├── php
-│   │   └── php.ini
-│   └── ssl
-└── web
-    ├── app
-    │   ├── composer.json.dist
-    │   ├── phpunit.xml.dist
-    │   ├── src
-    │   │   └── Foo.php
-    │   └── test
-    │       ├── FooTest.php
-    │       └── bootstrap.php
-    └── public
-        └── index.php
-```
 ___
 
 ## Instalação
@@ -124,40 +94,51 @@ cd selene-project-a
 ```
 ___
 
-## Executanto a aplicação
+### Estrutura do projeto
 
-1. Executando a aplicação:
-
-    ```sh
-    docker-compose up -d
-    ```
-
-2. Verificando os logs da aplicação:
-
-    ```sh
-    docker-compose logs -f
-    ```
-
-3. Acesse o seguindo link em seu navegador:
-
-    * [http://localhost:8000](http://localhost:8000/)
-    * [https://localhost:3000](https://localhost:3000/)
-    * [http://localhost:8080](http://localhost:8080/) PHPMyAdmin (username: dev, password: dev)
-
-4. Parando o docker e limpando os serviços
-
-    ```sh
-    docker-compose down -v
-    ```
+```sh
+├── data
+│   └── db
+│       ├── dumps
+│       └── mysql
+├── etc
+│   ├── nginx
+│   │   ├── default.conf
+│   │   └── default.template.conf
+│   ├── php
+│   │   └── php.ini
+│   └── ssl
+├── web
+│   ├── app
+│   │   ├── composer.json
+│   │   ├── phpunit.xml
+│   │   ├── .php-cs-fixer.php
+│   │   ├── src
+│   │   │   ├── Config
+│   │   │   ├── Controllers
+│   │   │   ├── Gateway
+│   │   │   ├── Models
+│   │   │   └── Storage
+│   │   └── tests
+│   │       └── Api
+│   ├── conf
+│   │   └── .env
+│   └── public
+│       ├── Views
+│       └── index.php
+├── docker-compose.yml
+├── Makefile
+└── README.md
+```
 ___
 
-## Usando o makefile
+## Comandos do make
 
 Os seguintes comandos estão disponíveis através do `make`:
 
 | Name          | Description                                                   |
 |---------------|---------------------------------------------------------------|
-| apidoc        | Gerador de documentação de API                                |
+| phpdoc        | Gerador de documentação de do código PHP                                |
 | clean         | Rodar o Code Sniffer no código PHP (PSR2)                     |
 | code-sniff    | Limpar os diretórios necessários para reiniciar os containers |
 | composer-up   | Atualizar as dependências do PHP utilizando o composer        |
@@ -169,22 +150,68 @@ Os seguintes comandos estão disponíveis através do `make`:
 | phpmd         | Rodar o PHP Mess Detector no código PHP                       |
 | test          | Rodar os testes da aplicação                                  |
 
-### Exemplos
+___
 
-Executando a aplicação:
+## Executando a aplicação
 
-```sh
-make start
+1. Executando a aplicação:
+
+    ```sh
+    make start
+    ```
+
+2. Verificando os logs da aplicação:
+
+    ```sh
+    make logs
+    ```
+
+3. Acesse a aplicação em seu navegador:
+
+    * [http://localhost:8000](http://localhost:8000/)
+    * [https://localhost:3000](https://localhost:3000/)
+    * [http://localhost:8080](http://localhost:8080/) PHPMyAdmin (username: dev, password: dev)
+
+4. Parando a aplicação e limpando os serviços
+
+    ```sh
+    make stop # Talvez você tenha que rodar este comando usando o sudo
+    ```
+___
+
+## A API de busca
+
+### Endpoints
+
+| URL                                | Serviço                                                     |
+|------------------------------------|-------------------------------------------------------------|
+| [/](/)                             | Página inicial com as diretrizes do projeto                 |
+| [/users/name](/users/name)         | Retorna todos os usuários de acordo com seu nome completo   |
+| [/users/username](/users/username) | Retorna todos os usuários de acordo com seu nome de usuário |
+
+
+### Parâmetros de URL
+| Parâmetro | Descrição                                                                                                       |
+|-----------|-----------------------------------------------------------------------------------------------------------------|
+| query     | Utilize este parâmetro para realizar uma busca nos endpoints                                                    |
+| from      | Utilize este parâmetro para configurar o inicio da busca de usuários  (default: 1)                              |
+| size      | Utilize este parâmetro para configurar a quantidade de usuários que devem ser retornados na busca (default: 15) |
+
+#### Exemplo de requisição com parâmetros de URL
+
+Buscando usuários por nome completo
+
+```
+GET /users/name?query=Edmundo&from=1&size=10
 ```
 
-Pedindo ajuda:
-
-```sh
-make help
+Buscando usuários por nome de usuário
+```
+GET /users/username?query=Edmundo&from=1&size=10
 ```
 ___
 
-## Usando os comandos do docker
+## Comandos do docker
 
 ### Instalando pacotes com composer
 
