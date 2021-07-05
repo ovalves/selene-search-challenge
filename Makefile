@@ -10,7 +10,7 @@ help:
 	@echo "Uso: make Commands"
 	@echo ""
 	@echo "Commands:"
-	@echo "  apidoc              Gerador de documentação de API"
+	@echo "  phpdoc              Gerador de documentação de API"
 	@echo "  code-sniff          Rodar o Code Sniffer no código PHP (PSR2)"
 	@echo "  clean               Limpar os diretórios necessários para reiniciar os containers"
 	@echo "  composer-up         Atualizar as dependências do PHP utilizando o composer"
@@ -27,7 +27,7 @@ help:
 init:
 	@$(shell cp -n $(shell pwd)/web/app/composer.json.dist $(shell pwd)/web/app/composer.json 2> /dev/null)
 
-apidoc:
+phpdoc:
 	@docker run --rm -v $(shell pwd):/data phpdoc/phpdoc -i=vendor/ -d /data/web/app/src -t /data/web/app/doc
 	@make resetOwner
 
@@ -82,7 +82,7 @@ phpmd:
 	./app/vendor/bin/phpmd \
 	./app/src text cleancode,codesize,controversial,design,naming,unusedcode
 
-test: code-sniff
+test:
 	@docker-compose exec -T php ./app/vendor/bin/phpunit --colors=always --configuration ./app/
 	@make resetOwner
 
