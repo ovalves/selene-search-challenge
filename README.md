@@ -1,30 +1,31 @@
 # Desafio de Busca utilizando o selene framework
 
-- [Introdução](#Introdução)
-- [Conceitos](#Conceitos)
-- [Instalação](#Instalação)
-    - [Pré-requisitos.](#Pré-requisitos.)
-    - [Imagens utilizadas neste projeto](#Imagens-utilizadas-neste-projeto)
-    - [Clonando o projeto](#Clonando-o-projeto)
-- [Executanto a aplicação](#Executanto-a-aplicação)
-- [Usando o makefile](#Usando-o-makefile)
-    - [Exemplos](#Exemplos)
-- [Usando os comandos do docker](#Usando-os-comandos-do-docker)
-- [Instalando pacotes com composer](#Instalando-pacotes-com-composer)
-- [Atualizando dependências PHP com composer](#Atualizando-dependências-PHP-com-composer)
-- [Gerando documentações com PHPDOC](#Gerando-documentações-com-PHPDOC)
-- [Testando a aplicação com o phpunit](#Testando-a-aplicação-com-o-phpunit)
-- [Ajustando o código-fonte com o padrão da PSR2](#Ajustando-o-código-fonte-com-o-padrão-da-PSR2)
-- [Ajustando o código-fonte com o padrão da PSR2](#Ajustando-o-código-fonte-com-o-padrão-da-PSR2)
-- [Analisando o código-fonte com PHPCS](#Analisando-o-código-fonte-com-PHPCS)
-- [Analisando o código-fonte com PHPMD](#Analisando-o-código-fonte-com-PHPMD)
-- [Verificando as extensões do PHP instaladas](#Verificando-as-extensões-do-PHP-instaladas)
-- [Manipulando o banco de dados](#Manipulando-o-banco-de-dados)
-    - [Acesso ao MySQL](#Acesso-ao-MySQL)
-    - [Criando um backup de todos os bancos de dados](#Criando-um-backup-de-todos-os-bancos-de-dados)
-    - [Restaurando um backup de todos os bancos de dados](#Restaurando-um-backup-de-todos-os-bancos-de-dados)
-    - [Criando um backup de um único banco de dados](#Criando-um-backup-de-um-único-banco-de-dados)
-    - [Restaurando um backup de um único banco de dados](#Restaurando-um-backup-de-um-único-banco-de-dados)
+- [Desafio de Busca utilizando o selene framework](#desafio-de-busca-utilizando-o-selene-framework)
+  - [Introdução](#introdução)
+  - [Conceitos](#conceitos)
+    - [Estrutura do projeto](#estrutura-do-projeto)
+  - [Instalação](#instalação)
+    - [Pré-requisitos.](#pré-requisitos)
+    - [Imagens utilizadas neste projeto](#imagens-utilizadas-neste-projeto)
+    - [Clonando o projeto](#clonando-o-projeto)
+  - [Executanto a aplicação](#executanto-a-aplicação)
+  - [Usando o makefile](#usando-o-makefile)
+    - [Exemplos](#exemplos)
+  - [Usando os comandos do docker](#usando-os-comandos-do-docker)
+    - [Instalando pacotes com composer](#instalando-pacotes-com-composer)
+    - [Atualizando dependências PHP com composer](#atualizando-dependências-php-com-composer)
+    - [Gerando documentações com PHPDOC](#gerando-documentações-com-phpdoc)
+    - [Testando a aplicação com o phpunit](#testando-a-aplicação-com-o-phpunit)
+    - [Ajustando o código-fonte com o padrão da PSR2](#ajustando-o-código-fonte-com-o-padrão-da-psr2)
+    - [Analisando o código-fonte com PHPCS](#analisando-o-código-fonte-com-phpcs)
+    - [Analisando o código-fonte com PHPMD](#analisando-o-código-fonte-com-phpmd)
+    - [Verificando as extensões do PHP instaladas](#verificando-as-extensões-do-php-instaladas)
+  - [Manipulando o banco de dados](#manipulando-o-banco-de-dados)
+    - [Acesso ao MySQL](#acesso-ao-mysql)
+      - [Criando um backup de todos os bancos de dados](#criando-um-backup-de-todos-os-bancos-de-dados)
+      - [Restaurando um backup de todos os bancos de dados](#restaurando-um-backup-de-todos-os-bancos-de-dados)
+      - [Criando um backup de um único banco de dados](#criando-um-backup-de-um-único-banco-de-dados)
+      - [Restaurando um backup de um único banco de dados](#restaurando-um-backup-de-um-único-banco-de-dados)
 
 ___
 
@@ -154,26 +155,26 @@ ___
 
 Os seguintes comandos estão disponíveis através do `make`:
 
-| Name          | Description                                  |
-|---------------|----------------------------------------------|
-| apidoc        | Generate documentation of API                |
-| clean         | Clean directories for reset                  |
-| code-sniff    | Check the API with PHP Code Sniffer (`PSR2`) |
-| composer-up   | Update PHP dependencies with composer        |
-| docker-start  | Create and start containers                  |
-| docker-stop   | Stop and clear all services                  |
-| logs          | Follow log output                            |
-| mysql-dump    | Create backup of all databases               |
-| mysql-restore | Restore backup of all databases              |
-| phpmd         | Analyse the API with PHP Mess Detector       |
-| test          | Test application with phpunit                |
+| Name          | Description                                                   |
+|---------------|---------------------------------------------------------------|
+| apidoc        | Gerador de documentação de API                                |
+| clean         | Rodar o Code Sniffer no código PHP (PSR2)                     |
+| code-sniff    | Limpar os diretórios necessários para reiniciar os containers |
+| composer-up   | Atualizar as dependências do PHP utilizando o composer        |
+| start         | Iniciar todos os serviços                                     |
+| stop          | Parar todos os serviços                                       |
+| logs          | Visualizar os logs dos serviços                               |
+| mysql-dump    | Criar backup de todos os bancos de dados                      |
+| mysql-restore | Restaurar o backup de todos os bancos de dados                |
+| phpmd         | Rodar o PHP Mess Detector no código PHP                       |
+| test          | Rodar os testes da aplicação                                  |
 
 ### Exemplos
 
 Executando a aplicação:
 
 ```sh
-make docker-start
+make start
 ```
 
 Pedindo ajuda:
