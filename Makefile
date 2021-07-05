@@ -15,6 +15,7 @@ help:
 	@echo "  clean               Limpar os diretórios necessários para reiniciar os containers"
 	@echo "  composer-up         Atualizar as dependências do PHP utilizando o composer"
 	@echo "  start               Iniciar todos os serviços"
+	@echo "  start-with-db       Iniciar o projeto com a base de dados do desafio de busca"
 	@echo "  stop                Parar todos os serviços"
 	@echo "  logs                Visualizar os logs dos serviços"
 	@echo "  mysql-dump-all      Criar backup de todos os bancos de dados"
@@ -49,6 +50,10 @@ composer-up:
 
 start: init
 	docker-compose up -d
+
+start-with-db: start
+	@echo "Iniciando o projeto com a base de dados do desafio de busca..."
+	@make mysql-restore-db DATABASE='selene'
 
 stop:
 	@docker-compose down -v

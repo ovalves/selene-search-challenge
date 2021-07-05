@@ -138,7 +138,7 @@ Os seguintes comandos estão disponíveis através do `make`:
 
 | Name          | Description                                                   |
 |---------------|---------------------------------------------------------------|
-| phpdoc        | Gerador de documentação de do código PHP                                |
+| phpdoc        | Gerador de documentação de do código PHP                      |
 | clean         | Rodar o Code Sniffer no código PHP (PSR2)                     |
 | code-sniff    | Limpar os diretórios necessários para reiniciar os containers |
 | composer-up   | Atualizar as dependências do PHP utilizando o composer        |
@@ -153,6 +153,12 @@ Os seguintes comandos estão disponíveis através do `make`:
 ___
 
 ## Executando a aplicação
+
+Executando a aplicação com o banco de dados do desafio de busca:
+
+    ```sh
+    make start-with-db
+    ```
 
 1. Executando a aplicação:
 
