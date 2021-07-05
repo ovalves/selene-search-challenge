@@ -36,6 +36,7 @@ clean:
 	@rm -Rf web/app/composer.lock
 	@rm -Rf web/app/doc
 	@rm -Rf web/app/report
+	@rm -Rf web/app/.env
 	@rm -Rf etc/ssl/*
 
 code-sniff:
