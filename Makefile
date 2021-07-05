@@ -7,20 +7,20 @@ MYSQL_DUMPS_DIR=data/db/dumps
 
 help:
 	@echo ""
-	@echo "usage: make COMMAND"
+	@echo "Uso: make Commands"
 	@echo ""
 	@echo "Commands:"
-	@echo "  apidoc              Generate documentation of API"
-	@echo "  code-sniff          Check the API with PHP Code Sniffer (PSR2)"
-	@echo "  clean               Clean directories for reset"
-	@echo "  composer-up         Update PHP dependencies with composer"
-	@echo "  docker-start        Create and start containers"
-	@echo "  docker-stop         Stop and clear all services"
-	@echo "  logs                Follow log output"
-	@echo "  mysql-dump          Create backup of all databases"
-	@echo "  mysql-restore       Restore backup of all databases"
-	@echo "  phpmd               Analyse the API with PHP Mess Detector"
-	@echo "  test                Test application"
+	@echo "  apidoc              Gerador de documentação de API"
+	@echo "  code-sniff          Rodar o Code Sniffer no código PHP (PSR2)"
+	@echo "  clean               Limpar os diretórios necessários para reiniciar os containers"
+	@echo "  composer-up         Atualizar as dependências do PHP utilizando o composer"
+	@echo "  start        		 Iniciar todos os serviços"
+	@echo "  stop         		 Parar todos os serviços"
+	@echo "  logs                Visualizar os logs dos serviços"
+	@echo "  mysql-dump          Criar backup de todos os bancos de dados"
+	@echo "  mysql-restore       Restaurar o backup de todos os bancos de dados"
+	@echo "  phpmd               Rodar o PHP Mess Detector no código PHP"
+	@echo "  test                Rodar os testes da aplicação"
 
 init:
 	@$(shell cp -n $(shell pwd)/web/app/composer.json.dist $(shell pwd)/web/app/composer.json 2> /dev/null)
@@ -40,16 +40,16 @@ clean:
 	@rm -Rf etc/ssl/*
 
 code-sniff:
-	@echo "Checking the standard code..."
+	@echo "Verificando o padrão de código..."
 	@docker-compose exec -T php ./app/vendor/bin/phpcs -v --standard=PSR2 app/src
 
 composer-up:
 	@docker run --rm -v $(shell pwd)/web/app:/app composer update
 
-docker-start: init
+start: init
 	docker-compose up -d
 
-docker-stop:
+stop:
 	@docker-compose down -v
 	@make clean
 
