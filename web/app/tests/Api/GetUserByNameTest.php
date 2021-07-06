@@ -21,46 +21,37 @@ class GetUserByNameTest extends TestCase
     }
 
     /**
-     * Undocumented function
-     *
-     * @return void
+     * Test: Executando a query de busca de usuários por nome.
      */
-    public function testGetUsersByName()
+    public function testGetUsersByName(): void
     {
+        $this->setName('Test: Executando a query de busca de usuários por nome.');
+        $users = $this->gateway->findUsersByName(
+            'Edmundo',
+            1,
+            10
+        );
+
+        $this->assertEquals(3, count($users));
+    }
+
+    /**
+     * Test: Executando a query de busca de usuários por nome de usuário.
+     */
+    public function testSearchExistentUserByName(): void
+    {
+        $this->setName('Test: Executando a query de busca de usuários por nome de usuário.');
         $users = $this->gateway->findUsersByUserName(
             'Edmundo',
             1,
             10
         );
 
-        echo '<pre>';
-        var_dump ($users);
-        die();
+        $this->assertEquals(3, count($users));
     }
 
     /**
-     * Undocumented function
-     *
-     * @return void
-     */
-    public function testSearchExistentUserByName()
-    {
-        $this->setName('Test: Buscando um usuário por nome existente na base de dados');
-        $response = $this->http->request('GET', '/users/name', [
-            'query' => ['query' => 'Edmundo'],
-        ]);
-
-        $this->assertEquals(200, $response->getStatusCode());
-
-        $contentType = $response->getHeaders()['Content-Type'][0];
-        $this->assertEquals('application/json', $contentType);
-    }
-
-    /**
-     * Cria e o container de gateway de usuários
-     * Utilizado para testar as querys de usuários
-     *
-     * @return void
+     * Cria e o container de gateway de base de dados para a tabela users.
      */
     private function initGateway(): void
     {
