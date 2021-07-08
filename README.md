@@ -9,7 +9,11 @@
     - [Clonando o projeto](#clonando-o-projeto)
     - [Estrutura do projeto](#estrutura-do-projeto)
   - [Comandos do make](#comandos-do-make)
-  - [Executando a aplicação](#executando-a-aplicação)
+  - [Executando a aplicação e rodando o dump do banco de dados do desafio de busca](#executando-a-aplicação-e-rodando-o-dump-do-banco-de-dados-do-desafio-de-busca)
+  - [Executando a aplicação com banco de dados padrão](#executando-a-aplicação-com-banco-de-dados-padrão)
+  - [Verificando os logs da aplicação](#verificando-os-logs-da-aplicação)
+  - [Acessando a aplicação no navegador](#acessando-a-aplicação-no-navegador)
+  - [Parando a aplicação e limpando os serviços](#parando-a-aplicação-e-limpando-os-serviços)
   - [A API de busca](#a-api-de-busca)
     - [Endpoints](#endpoints)
     - [Parâmetros de URL](#parâmetros-de-url)
@@ -152,37 +156,36 @@ Os seguintes comandos estão disponíveis através do `make`:
 
 ___
 
-## Executando a aplicação
+## Executando a aplicação e rodando o dump do banco de dados do desafio de busca
+Executando a aplicação:
+```sh
+make start-with-db
+```
+___
 
-Executando a aplicação com o banco de dados do desafio de busca:
+## Executando a aplicação com banco de dados padrão
+```sh
+make start
+```
+___
 
-    ```sh
-    make start-with-db
-    ```
-
-1. Executando a aplicação:
-
-    ```sh
-    make start
-    ```
-
-2. Verificando os logs da aplicação:
-
+## Verificando os logs da aplicação
     ```sh
     make logs
     ```
+___
 
-3. Acesse a aplicação em seu navegador:
+## Acessando a aplicação no navegador
+* [http://localhost:8000](http://localhost:8000/)
+* [https://localhost:3000](https://localhost:3000/)
+* [http://localhost:8080](http://localhost:8080/) PHPMyAdmin (username: dev, password: dev)
 
-    * [http://localhost:8000](http://localhost:8000/)
-    * [https://localhost:3000](https://localhost:3000/)
-    * [http://localhost:8080](http://localhost:8080/) PHPMyAdmin (username: dev, password: dev)
+___
 
-4. Parando a aplicação e limpando os serviços
-
-    ```sh
-    make stop # Talvez você tenha que rodar este comando usando o sudo
-    ```
+## Parando a aplicação e limpando os serviços
+```sh
+make stop # Talvez você tenha que rodar este comando usando o sudo
+```
 ___
 
 ## A API de busca
