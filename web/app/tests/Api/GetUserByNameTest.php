@@ -21,6 +21,49 @@ class GetUserByNameTest extends TestCase
     }
 
     /**
+     * Test: Ordem de retorno dos dados da API.
+     */
+    public function testGetUsersByNameOrder(): void
+    {
+        $this->setName('Test: Ordem de retorno dos dados da API');
+        $users = $this->gateway->findUsersByName(
+            'Edm',
+            0,
+            5
+        );
+
+        $expected = [
+            0 => [
+                'id'       => "e143a3c3-e4fc-4e13-85c6-21c3493b3bbd",
+                'name'     => "Edmarine Rafaella",
+                'username' => "edmarine.rafaella",
+            ],
+            1 => [
+                'id'       => "067d1f2c-6ffc-452e-b250-49ce245c93ec",
+                'name'     => "Edmy Rebeka",
+                'username' => "edmy.rebeka",
+            ],
+            2	=> [
+                'id'       => "12b7cb6a-a3c3-46ff-9011-487a26256818",
+                'name'     => "Edmy Tosin",
+                'username' => "edmytosin",
+            ],
+            3	=> [
+                'id'       => "14088131-c1dd-4138-8fe6-697ba461503c",
+                'name'     => "Edmarlow Dezan Erdei",
+                'username' => "edmarlow.dezan.erdei",
+            ],
+            4	=> [
+                'id'	    => "1624e388-fd37-473f-9f94-290e4908aa03",
+                'name'	    => "Edmar Wagner",
+                'username'	=> "edmar.wagner",
+            ],
+        ];
+
+        $this->assertEquals($expected, $users);
+    }
+
+    /**
      * Test: Executando a query de busca de usuários por nome.
      */
     public function testGetUsersByName(): void
