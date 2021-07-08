@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class UsersController extends BaseController
 {
     private $gateway;
-    private string $name;
+    private string $query;
     private int $from;
     private int $size;
 
@@ -23,8 +23,8 @@ class UsersController extends BaseController
         try {
             $this->getUsersParams($request);
             $users = $this->getGateway()->findUsersByName(
-                $this->name,
-                $this->from,
+                $this->query,
+                $this->from * $this->size,
                 $this->size
             );
 
@@ -57,8 +57,8 @@ class UsersController extends BaseController
         try {
             $this->getUsersParams($request);
             $users = $this->getGateway()->findUsersByUserName(
-                $this->name,
-                $this->from,
+                $this->query,
+                $this->from * $this->size,
                 $this->size
             );
 
@@ -90,11 +90,9 @@ class UsersController extends BaseController
     {
         $params = $request->getQueryParams();
 
-        $this->name = (string) (empty($params['query'])) ? '' : $params['query'];
+        $this->query = (string) (empty($params['query'])) ? '' : $params['query'];
         $this->size = (int) (empty($params['size'])) ? 15 : $params['size'];
-        $this->from = (int) (empty($params['from']))
-            ? 0
-            : $params['from'] * $this->size;
+        $this->from = (int) (empty($params['from'])) ? 0 : $params['from'];
     }
 
     private function getGateway(): UsersGateway
