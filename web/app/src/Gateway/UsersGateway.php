@@ -52,7 +52,7 @@ class UsersGateway extends GatewayAbstract
                 ->where(["{$column} like ?" => "%{$where}%"])
                 ->order('lista_relevancia_1.id', 'DESC')
                 ->order('lista_relevancia_2.id', 'DESC')
-                ->order('users.id', 'DESC')
+                ->order('users.id', 'ASC')
                 ->limit($size)
                 ->offset($from)
                 ->execute()
