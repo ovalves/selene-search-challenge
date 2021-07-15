@@ -6,6 +6,7 @@
  * @since       2019-10-12
  */
 
+use Exception;
 use Selene\Controllers\BaseController;
 use Selene\Request\Request;
 use Selene\Response\Response;
@@ -29,7 +30,7 @@ class UsersController extends BaseController
             );
 
             if (empty($users)) {
-                throw new \Exception('Nenhum usuário encontrado.', 404);
+                throw new Exception('Nenhum usuário encontrado.', 404);
             }
 
             return $response->json(
@@ -63,7 +64,7 @@ class UsersController extends BaseController
             );
 
             if (empty($users)) {
-                throw new \Exception('Nenhum usuário encontrado.', 404);
+                throw new Exception('Nenhum usuário encontrado.', 404);
             }
 
             return $response->json(
