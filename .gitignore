@@ -10,6 +10,7 @@ web/app/doc/
 web/app/report/
 web/app/.env
 data/db/mysql
+.env
 
 # PHPStorm
 .idea/**/workspace.xml
