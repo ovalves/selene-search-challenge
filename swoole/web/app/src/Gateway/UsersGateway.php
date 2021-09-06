@@ -6,7 +6,6 @@
  * @since       2019-10-12
  */
 
-use Exception;
 use Selene\Gateway\GatewayAbstract;
 
 class UsersGateway extends GatewayAbstract
@@ -18,7 +17,7 @@ class UsersGateway extends GatewayAbstract
     {
         try {
             return $this->findUsers('name', $where, $from, $size);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             throw $e;
         }
     }
@@ -30,7 +29,7 @@ class UsersGateway extends GatewayAbstract
     {
         try {
             return $this->findUsers('username', $where, $from, $size);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             throw $e;
         }
     }
@@ -58,8 +57,8 @@ class UsersGateway extends GatewayAbstract
                 ->offset($from)
                 ->execute()
                 ->fetchAll(\PDO::FETCH_ASSOC);
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage() ?? 'Erro ao realizar a busca de usuários', $e->getCode() ?? 500);
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage() ?? 'Erro ao realizar a busca de usuários', $e->getCode() ?? 500);
         }
     }
 }
