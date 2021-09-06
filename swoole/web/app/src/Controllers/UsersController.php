@@ -28,7 +28,7 @@ class UsersController extends BaseController
             );
 
             if (empty($users)) {
-                throw new Exception('Nenhum usuário encontrado.', 404);
+                throw new \Exception('Nenhum usuário encontrado.', 404);
             }
 
             return $response->json(
@@ -46,7 +46,7 @@ class UsersController extends BaseController
                     'size' => (int) $this->size,
                     'data' => [],
                 ],
-                $response::HTTP_NOT_FOUND ?? 500
+                $response::HTTP_NOT_FOUND ?? $e->getCode()
             );
         }
     }
@@ -62,7 +62,7 @@ class UsersController extends BaseController
             );
 
             if (empty($users)) {
-                throw new Exception('Nenhum usuário encontrado.', 404);
+                throw new \Exception('Nenhum usuário encontrado.', 404);
             }
 
             return $response->json(
@@ -80,7 +80,7 @@ class UsersController extends BaseController
                     'size' => (int) $this->size,
                     'data' => [],
                 ],
-                $response::HTTP_NOT_FOUND ?? 500
+                $response::HTTP_NOT_FOUND ?? $e->getCode()
             );
         }
     }
