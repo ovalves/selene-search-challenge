@@ -1,4 +1,8 @@
 <?php declare(strict_types=1);
+/**
+ * Este arquivo pertence ao projeto: https://github.com/leocavalcante/dwoole
+ * Link para o arquivo: https://github.com/leocavalcante/dwoole/blob/main/dev/watch.php
+ */
 
 use Swoole\Process;
 
