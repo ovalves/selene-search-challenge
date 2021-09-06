@@ -1,8 +1,9 @@
 # Global
 .*.swp
 .DS_Store
+.env
 
-# Application
+# Web Application
 web/app/composer.lock
 web/app/.phpunit.result.cache
 web/app/vendor/
@@ -10,7 +11,13 @@ web/app/doc/
 web/app/report/
 web/app/.env
 data/db/mysql
-.env
+
+# Swoole Application
+swoole/web/app/composer.lock
+swoole/web/app/.phpunit.result.cache
+swoole/web/app/vendor/
+swoole/web/app/doc/
+swoole/web/app/report/
 
 # PHPStorm
 .idea/**/workspace.xml
