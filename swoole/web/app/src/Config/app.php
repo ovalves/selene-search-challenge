@@ -10,6 +10,7 @@ return [
             DatabaseConstant::DB_NAME => env('MYSQL_DATABASE'),
             DatabaseConstant::DB_USER => env('MYSQL_USER'),
             DatabaseConstant::DB_PASS => env('MYSQL_PASSWORD'),
+            DatabaseConstant::DB_PORT => env('MYSQL_PORT'),
         ],
         DatabaseConstant::DEFAULT_DB => 'mysql',
     ],
