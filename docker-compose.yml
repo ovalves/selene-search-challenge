@@ -1,15 +1,17 @@
 version: '3'
 services:
     app:
-      image: phpswoole/swoole
       environment:
         AUTORELOAD_PROGRAMS: "swoole"
         AUTORELOAD_ANY_FILES: 0
+      build: .
       ports:
         - 80:9501
       volumes:
         - ./swoole:/var/www
         - ".env:/var/www/web/app/.env"
+      depends_on:
+        - mysqldb
     composer:
       image: "composer"
       volumes:
@@ -38,6 +40,6 @@ services:
             - MYSQL_USER=${MYSQL_USER}
             - MYSQL_PASSWORD=${MYSQL_PASSWORD}
         ports:
-            - "8989:3306"
+            - "8989:${MYSQL_PORT}"
         volumes:
             - "./data/db/mysql:/var/lib/mysql"
