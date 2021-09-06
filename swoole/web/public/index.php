@@ -9,7 +9,6 @@
 declare(strict_types=1);
 
 require '/var/www/web/app/vendor/autoload.php';
-// require __DIR__.'/../app/vendor/autoload.php';
 
 $app = Selene\App\Factory::create('/var/www/web/app/');
 
@@ -38,7 +37,12 @@ $http->on(
     "request",
     function (Request $request, Response $response) use ($app) {
         $emitted = $app->emit($request);
-        $response->end($emitted);
+
+        foreach ($emitted->getHeaders() as $key => $value) {
+            $response->header($key, $value);
+        }
+
+        $response->end($emitted->getContent());
     }
 );
 
